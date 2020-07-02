@@ -21,20 +21,19 @@ def mapfn(k, v):
 
 def reducefn(k, v):
     print 'reduce ' + k
-    total = 0
-    listaAutores = {}
-
+    listaPalavras = {}
+    from stopwords import allStopWords
     for index, item in enumerate(v):
-        listaPalavras = {}
         for palavra in item:
-            print 'palavra -------------------------->' + palavra
-            if palavra in listaPalavras:
-                listaPalavras[palavra] = listaPalavras[palavra] + 1
-            else:
-                listaPalavras[palavra] = 1
-        listaAutores[k] = listaPalavras 
+            if(palavra not in allStopWords):
+                if palavra in listaPalavras:
+                    listaPalavras[palavra] = int(listaPalavras.get(palavra)) + 1
+                else:
+                    listaPalavras[palavra] = 1
     
-    return listaAutores
+    return listaPalavras
+
+
 
 s = mincemeat.Server()
 s.datasource = source
