@@ -58,23 +58,25 @@ for k, v in results.items():
 
 #Buscar as palavras mais usadas pelos autores Grzegorz Rozenberg e Philip S. Yu.
 resultado = {}
+file1 = open("resultadoExerc6.txt","w") 
 for k, v in results.items():
     if(k in {'Grzegorz Rozenberg', 'Philip S Yu'}):
         maiorQuant = 0
         segundoMaiorQuant = 0
+        file1.write('\n' + k)
+        
         for a,b in v.items():
-            if(b > maiorQuant):
+            if b > maiorQuant:
                segundoMaiorQuant = maiorQuant
                maiorQuant = b
+            elif b > segundoMaiorQuant and b != maiorQuant:
+               segundoMaiorQuant = b
 
-        for c,d in v.items():
-            if d == maiorQuant:
-                print k + ' - ' + c + ' - ' + str(d)
-            elif d == segundoMaiorQuant:
-                print k + ' - ' + c + ' - ' + str(d)
-
-        #resultado[k] = {maiorQuant, segundoMaiorQuant}
-
-#w = csv.writer(open('D:\\Pos graduacao\\Big Data\\TrabalhoFinal\\result_palavras_mais_usadas.csv', 'w'))
-#for k, v in resultado.items():
-#    w.writerow([k, v])
+        sort_orders = sorted(v.items(), key=lambda x: x[1], reverse=True)
+        for d in sort_orders:
+            if d[1] == maiorQuant:
+                file1.write('\n' + d[0] + ' - ' + str(d[1])) 
+            elif d[1] == segundoMaiorQuant:
+                file1.write('\n' + d[0] + ' - ' + str(d[1])) 
+        file1.write('\n=========================================')
+file1.close() 
